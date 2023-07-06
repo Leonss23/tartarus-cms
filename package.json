@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "drizzle-kit generate:mysql",
+    "push": "drizzle-kit push:mysql",
+    "introspect": "drizzle-kit introspect:mysql"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.13",
@@ -21,6 +24,7 @@
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.27.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.7",
