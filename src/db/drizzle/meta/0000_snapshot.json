@@ -4,8 +4,8 @@
   "version": "5",
   "dialect": "mysql",
   "tables": {
-    "cms-store": {
-      "name": "cms-store",
+    "cms_store": {
+      "name": "cms_store",
       "columns": {
         "id": {
           "autoincrement": true,
