@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { UserButton } from "@clerk/nextjs";
 
-import { Modal } from "@/components/ui/modal";
 import { useStoreModal } from "@/hooks/use-store-modal";
 
 export default function Page() {
@@ -16,10 +14,5 @@ export default function Page() {
     }
   }, [isOpen, onOpen]);
 
-  return (
-    <main>
-      <h1>Tartarus</h1>
-      <h2>CMS Dashboard</h2>
-    </main>
-  );
+  return null;
 }
