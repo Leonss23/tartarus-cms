@@ -1,11 +1,12 @@
 "use client";
 
-import z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { isAxiosError } from "axios";
+import { toast } from "react-hot-toast";
 
-import { useStoreModal } from "@/hooks/use-store-modal";
-import { Modal } from "@/components/ui/modal";
 import {
   Form,
   FormControl,
@@ -17,12 +18,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { useStoreModal } from "@/hooks/use-store-modal";
+import { Modal } from "@/components/ui/modal";
+
 const formSchema = z.object({
   name: z.string().min(1),
 });
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
+
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,8 +38,21 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
-    //TODO: Create Store
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/store", values);
+      console.log(response.data);
+      toast.success("Store created");
+      window.location.assign(`/${response.data.id}`);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data);
+        return;
+      }
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,17 +71,22 @@ export const StoreModal = () => {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="My store" {...field} />
+                  <Input disabled={loading} placeholder="My store" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="flex justify-end pt-8 items-center gap-4">
-            <Button variant={"outline"} onClick={storeModal.onClose}>
+            <Button
+              disabled={loading}
+              variant={"outline"}
+              type="button"
+              onClick={storeModal.onClose}
+            >
               Cancel
             </Button>
-            <Button variant={"default"} type="submit">
+            <Button disabled={loading} variant={"default"} type="submit">
               Continue
             </Button>
           </div>
