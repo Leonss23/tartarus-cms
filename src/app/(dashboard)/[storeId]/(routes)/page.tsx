@@ -3,11 +3,10 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 interface Props {
-  children: React.ReactNode;
   params: { storeId: number };
 }
 
-export default async function Page({ children, params }: Props) {
+export default async function Page({ params }: Props) {
   const { userId } = auth();
   if (!userId) redirect("/sign-in");
 
