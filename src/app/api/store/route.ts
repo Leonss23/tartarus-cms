@@ -17,8 +17,6 @@ export async function POST(req: Request) {
     if (!result)
       return new NextResponse("Failed to create store", { status: 409 });
 
-    console.log("[STORE]", result);
-
     const { data: store } = await getStore(Number(result.insertId), userId);
     if (!store)
       return new NextResponse("Something went wrong", { status: 500 });
