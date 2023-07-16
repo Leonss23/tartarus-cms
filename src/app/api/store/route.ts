@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import { newStore } from "@/lib/db/newStore";
-import { getStore } from "@/lib/db/getStore";
 
 export async function POST(req: Request) {
   try {
@@ -17,11 +16,7 @@ export async function POST(req: Request) {
     if (!result)
       return new NextResponse("Failed to create store", { status: 409 });
 
-    const { data: store } = await getStore(Number(result.insertId), userId);
-    if (!store)
-      return new NextResponse("Something went wrong", { status: 500 });
-
-    return NextResponse.json(store);
+    return NextResponse.json({ insertId: result.insertId });
   } catch (error) {
     console.log("[STORE_POST]", error);
     return new NextResponse("Something went wrong", { status: 500 });
