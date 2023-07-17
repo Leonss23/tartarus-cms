@@ -2,7 +2,6 @@ import { getAllStores } from "@/lib/db/getAllStores";
 
 export default async function Page() {
   const { data: stores, error } = await getAllStores();
-  console.log({ stores });
   return (
     <main>
       <h1>Test</h1>
